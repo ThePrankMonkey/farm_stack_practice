@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "farm_practice"
+authors = [
+    {name = "Matthew Hellmer", email = "theprankmonkey@gmail.com"},
+]
+description = "FastAPI Backend practice"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Framework :: FastAPI",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pymongo",
+    'importlib-metadata; python_version<"3.8"',
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+
+[project.scripts]
+run = "uvicorn main:app"
