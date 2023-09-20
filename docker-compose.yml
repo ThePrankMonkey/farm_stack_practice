@@ -8,10 +8,36 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile
+    environment:
+      MONGODB_URL: "mongodb+srv://root:example@db/test?retryWrites=true&w=majority"
     volumes:
       - ./backend/src:/usr/app/src
       - ./backend/tests:/usr/app/tests
     ports:
       - "8000:8000"
-      
-    
+  db:
+    container_name: db
+    image: mongo:4.4.18  # MongoDB 5.0+ requires a CPU with AVX support
+    restart: always
+    volumes:
+      - ./db/data:/data/db
+      # - ./db/init:/docker-entrypoint-initdb.d
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      # MONGO_INITDB_DATABASE: test # defaults to 'test'
+    ports:
+      - "27017:27017"
+  frontend:
+    container_name: frontend
+    entrypoint: ["npm", "run", "start"]
+    # entrypoint: ["tail", "-f", "/dev/null"]
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: backend
+    volumes:
+      - ./frontend/src:/usr/app/src
+    ports:
+      - "3000:3000"
