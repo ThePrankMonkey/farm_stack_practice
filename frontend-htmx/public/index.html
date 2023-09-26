@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using htmx"
+    />
+    <title>HTMX App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <div hx-get="http://localhost:8000/h/" hx-swap="outerHTML" hx-trigger="load"></div>
+  </body>
+</html>

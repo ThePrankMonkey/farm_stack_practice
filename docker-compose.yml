@@ -41,3 +41,10 @@ services:
       - ./frontend/src:/usr/app/src
     ports:
       - "3000:3000"
+  fe-h:
+    image: nginx
+    volumes:
+    - ./frontend-htmx/conf/default.conf:/etc/nginx/conf.d/default.conf
+    - ./frontend-htmx/public/index.html:/usr/share/nginx/html/index.html
+    ports:
+    - "9000:80"
