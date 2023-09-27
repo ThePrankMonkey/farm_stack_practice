@@ -4,6 +4,6 @@ COPY . /usr/app
 
 RUN pip install -r /usr/app/requirements-dev.txt
 
-WORKDIR /usr/app/src
+WORKDIR /usr/app/src/app
 
 # ENTRYPOINT ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

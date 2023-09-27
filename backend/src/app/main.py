@@ -2,10 +2,15 @@ from typing import Union
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
+import app.routes.htmx as htmx
+import app.routes.react as react
+
 app = FastAPI()
+
+app.include_router(htmx.router)
+app.include_router(react.router)
 
 origins = [
     "http://localhost:3000",
@@ -38,11 +43,3 @@ async def read_item(item_id: int, q: str | None = None):
 async def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id}
 
-@app.get("/h/")
-async def htmx_root():
-    html_content = """
-    <div>
-    Hello World!
-    </div>
-    """
-    return HTMLResponse(content=html_content, status_code=200)

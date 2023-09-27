@@ -3,4 +3,4 @@ uvicorn[standard]
 pymongo
 # pymongo[aws]
 
-# -e .
+-e /usr/app/src
