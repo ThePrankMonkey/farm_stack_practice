@@ -1,0 +1,16 @@
+<div>
+    <nav>
+        <ul>
+        {% for section in sections %}
+            <li hx-get="{{section.url}}"
+                hx-swap="innerhtml"
+                hx-trigger="click"
+                hx-target="#main">
+                {{section.title}}
+            </li>
+        {% endfor %}
+        </ul>
+    </nav>
+    <main id="main">
+    </main>
+</div>

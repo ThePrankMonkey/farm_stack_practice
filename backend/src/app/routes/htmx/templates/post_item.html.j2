@@ -1,0 +1,7 @@
+<article>
+    <h2>{{ title }}</h2>
+    {% for paragraph in body %}
+    <p>{{ paragraph }}</p>
+    {% endfor %}
+    <small>Posted by {{ user }} on {{ timestamp }}</small>
+</article>
