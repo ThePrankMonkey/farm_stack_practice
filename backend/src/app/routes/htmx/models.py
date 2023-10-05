@@ -9,7 +9,7 @@ class Post(BaseModel):
     # id: ObjectId = Field(alias="_id")
     user: str
     title: str
-    body: list[str]
+    body: str
     timestamp: datetime = datetime.now()
 
     model_config = ConfigDict(arbitrary_types_allowed=True)

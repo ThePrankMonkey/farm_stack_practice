@@ -1,0 +1,16 @@
+<h3>Write a Blog Entry</h3>
+<form hx-post="http://localhost:8000/h/posts">
+  <div hx-target="this" hx-swap="outerHTML">
+    <label>User Name</label>
+    <input type="text" class="form-control" name="user">
+  </div>
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" name="title">
+  </div>
+  <div class="form-group">
+    <label>Body</label>
+    <textarea rows="5" cols="33" class="form-control" name="body"></textarea>
+  </div>
+  <button class="btn btn-default">Submit</button>
+</form>

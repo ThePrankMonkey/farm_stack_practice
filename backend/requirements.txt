@@ -1,7 +1,9 @@
 fastapi
 uvicorn[standard]
+python-multipart
 pymongo
 pydantic_mongo
 # pymongo[aws]
+markdown
 
 -e /usr/app/src

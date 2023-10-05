@@ -1,9 +1,11 @@
 
 from bson import ObjectId
-from fastapi import APIRouter
+from typing import Annotated
+from fastapi import APIRouter, Form
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse
 import jinja2
+from markdown import markdown
 
 from app.db import client
 from .models import Post
@@ -19,6 +21,7 @@ sections = [
     { "title": "home", "url": "http://localhost:8000/h/home"},
     { "title": "about", "url": "http://localhost:8000/h/about"},
     { "title": "posts", "url": "http://localhost:8000/h/posts"},
+    { "title": "add", "url": "http://localhost:8000/h/posts/add"},
 ]
 
 templateLoader = jinja2.FileSystemLoader(searchpath="./routes/htmx/templates")
@@ -31,16 +34,6 @@ async def htmx_root():
     return HTMLResponse(content=html_content, status_code=200)
 
 NO_POST = "<article>Post not found</article>"
-
-@router.get("/posts/{post_id}")
-async def htmx_posts_get(post_id:str):
-    post = collection.find_one({"_id": ObjectId(post_id)})
-    if post:
-        # make html
-        template = templateEnv.get_template("post_item.html.j2")
-        html_content = template.render(**post)
-        return HTMLResponse(content=html_content, status_code=200)
-    return HTMLResponse(content=NO_POST, status_code=404)
 
 @router.get("/posts")
 async def htmx_posts_post():
@@ -56,7 +49,12 @@ async def htmx_posts_post():
     return HTMLResponse(content=html_content, status_code=200)
 
 @router.post("/posts")
-async def htmx_posts_post(post: Post):
+async def htmx_posts_post(
+    user: Annotated[str, Form(...)], 
+    title: Annotated[str, Form(...)], 
+    body: Annotated[str, Form(...)],
+    ):
+    post = Post(user=user, title=title, body=body)
     print(post)
     post = jsonable_encoder(post)
     print(post)
@@ -67,4 +65,19 @@ async def htmx_posts_post(post: Post):
         return HTMLResponse(content=html_content, status_code=201)
     return HTMLResponse(content=NO_POST, status_code=404)
 
-    
+@router.get("/posts/add")
+async def htmx_posts_add():
+    template = templateEnv.get_template("post_form.html.j2")
+    html_content = template.render()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@router.get("/posts/{post_id}")
+async def htmx_posts_get(post_id:str):
+    post = collection.find_one({"_id": ObjectId(post_id)})
+    post["body"] = markdown(post["body"])
+    if post:
+        # make html
+        template = templateEnv.get_template("post_item.html.j2")
+        html_content = template.render(**post)
+        return HTMLResponse(content=html_content, status_code=200)
+    return HTMLResponse(content=NO_POST, status_code=404)

@@ -1,6 +1,6 @@
 <article>
     <h2>{{ title }}</h2>
-    {% for paragraph in body %}
+    {% for paragraph in body.split("\n") %}
     <p>{{ paragraph }}</p>
     {% endfor %}
     <small>Posted by {{ user }} on {{ timestamp }}</small>

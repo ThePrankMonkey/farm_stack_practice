@@ -1,10 +1,8 @@
-<div>
-    <section>
+<section>
     <h1>Posts</h1>
-    </section>
+</section>
+<section>
     {% for post_id in posts %}
-    <section>
     <div hx-get="http://localhost:8000/h/posts/{{ post_id }}" hx-swap="outerHTML" hx-trigger="load">loading</div>
-    </section>
     {% endfor %}
-</div>
+</section>
