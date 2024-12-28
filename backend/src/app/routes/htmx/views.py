@@ -81,3 +81,9 @@ async def htmx_posts_get(post_id:str):
         html_content = template.render(**post)
         return HTMLResponse(content=html_content, status_code=200)
     return HTMLResponse(content=NO_POST, status_code=404)
+
+@router.get("/about")
+async def htmx_about_get():
+    template = templateEnv.get_template("about.html.j2")
+    html_content = template.render()
+    return HTMLResponse(content=html_content, status_code=200)
